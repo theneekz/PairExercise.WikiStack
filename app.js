@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const { main } = require('./views');
+const { db } = require('./models');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -13,6 +14,10 @@ app.get('/', (req, res) => {
 });
 
 const PORT = 3000;
+
+db.authenticate().then(() => {
+  console.log('Connected to the database');
+});
 
 app.listen(PORT, () => {
   console.log(`App listening in port ${PORT}`);
